@@ -21,7 +21,7 @@ from django.urls import re_path, include
 # router.register(r'groups', views.GroupViewSet)
 
 urlpatterns = [
-	re_path('admin/', admin.site.urls),
+	# re_path('admin/', admin.site.urls),
 	# 自定义视图
 	# re_path(r'^', include(router.urls)),
 	# rest_framwork登录页
