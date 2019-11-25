@@ -8,16 +8,39 @@
 # @GitHub  ：https://github.com/Asunqingwen
 # @WebSite : labixiaoxin.me
 from django.urls import re_path
+from rest_framework import renderers
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from snippets import views
+from snippets.views import SnippetViewSet, UserViewSet
 
-urlpatterns = [
-	re_path(r'^snippets/$', views.SnippetList.as_view()),
-	re_path(r'^snippets/(?P<pk>[0-9]+)/$', views.SnippetDetail.as_view()),
+snippet_list = SnippetViewSet.as_view({
+	'get': 'list',
+	'post': 'create',
+})
 
-	re_path(r'^users/$', views.UserList.as_view()),
-	re_path(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
-]
+snippet_detail = SnippetViewSet.as_view({
+	'get': 'retrieve',
+	'put': 'update',
+	'patch': 'partial_update',
+	'delete': 'destory',
+})
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+snippet_highlight = SnippetViewSet.as_view({
+	'get': 'highlight',
+}, renderer_classes=[renderers.StaticHTMLRenderer])
+
+user_list = UserViewSet.as_view({
+	'get': 'list',
+})
+
+user_detail = UserViewSet.as_view({
+	'get': 'retrieve'
+})
+
+urlpatterns = format_suffix_patterns([
+	re_path(r'^snippets/$', snippet_list, name='snippet-list'),
+	re_path(r'^snippets/(?P<pk>[0-9]+)/$', snippet_detail, name='snippet-detail'),
+	re_path(r'^snippets/(?P<pk>[0-9]+)/highlight/$', snippet_highlight, name='snippet-highlight'),
+	re_path(r'^users/$', user_list, name='user-list'),
+	re_path(r'^users/(?P<pk>[0-9]+)/$', user_detail, name='user-detail')
+])

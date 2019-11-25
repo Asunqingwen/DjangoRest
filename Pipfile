@@ -10,6 +10,8 @@ django = "*"
 djangorestframework = "*"
 psycopg2 = "*"
 pygments = "*"
+coreapi = "*"
+pyyaml = "*"
 
 [requires]
 python_version = "3.6"

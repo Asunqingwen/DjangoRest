@@ -13,19 +13,27 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import re_path, include
+from rest_framework.routers import DefaultRouter
+# 概要视图
+from rest_framework.schemas import get_schema_view
 
-# router = routers.DefaultRouter()
-# router.register(r'users', views.UserViewSet)
-# router.register(r'groups', views.GroupViewSet)
+from snippets import views
 
+# 创建路由器，并注册我们的视图
+router = DefaultRouter()
+router.register(r'snippets', views.SnippetViewSet)
+router.register(r'users', views.UserViewSet)
+
+schema_view = get_schema_view(title='Pastebin API')
+
+# API URL现在由路由器自动确定
+# 包含可浏览的API登录URL
 urlpatterns = [
-	# re_path('admin/', admin.site.urls),
 	# 自定义视图
-	# re_path(r'^', include(router.urls)),
+	re_path(r'^', include(router.urls)),
 	# rest_framwork登录页
 	re_path(r'^', include('rest_framework.urls')),
-	# snippet视图
-	re_path(r'^', include('snippets.urls'))
+	# 概要视图
+	re_path(r'^schema/$', schema_view),
 ]
