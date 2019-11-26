@@ -37,10 +37,11 @@ INSTALLED_APPS = [
 	'django.contrib.staticfiles',
 	'rest_framework',
 	'snippets',
+	'blog',
 ]
 
 REST_FRAMEWORK = {
-	'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+	'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
 	'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',  # 添加这一行解决，
 	'PAGE_SIZE': 10  # 默认page_size
 }
